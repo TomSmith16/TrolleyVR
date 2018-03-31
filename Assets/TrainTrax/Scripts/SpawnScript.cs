@@ -11,7 +11,8 @@ public class SpawnScript : MonoBehaviour {
     public GameObject[] penguins;
     private Vector3 pos;
     private Quaternion rot;
-  
+    private List<int> Randoms;
+    private int index;
     VariationScript vscript;
 
     Scene scene;
@@ -21,7 +22,7 @@ public class SpawnScript : MonoBehaviour {
         rot = Quaternion.Euler(0, 90, 0);
         scene = SceneManager.GetActiveScene();
         vscript = GameObject.Find("Trolley").GetComponent<VariationScript>();
-
+        Randoms = new List<int>(models.Length-1);
         //(vscript.variation);
         VariationSpawn(0);
         //Debug.Log("Variation: " + vscript.variation);
@@ -52,10 +53,11 @@ public class SpawnScript : MonoBehaviour {
             }
 
             //amount = 5;
-            if (vscript.straight5)
+            /*if (vscript.straight5)
                 amount = 5;
             else
                 amount = 1;
+                */
             switch (v)
             {
                 //Standard
@@ -89,7 +91,10 @@ public class SpawnScript : MonoBehaviour {
                     break;
                 //Ages
                 case 4:
-                    
+                    if (vscript.straight5)
+                        amount = 5;
+                    else
+                        amount = 1;
                     break;
                 default:
                         amount = 1;
@@ -103,12 +108,18 @@ public class SpawnScript : MonoBehaviour {
             for (int i = 0; i < amount; i++)
             {
                 //gender = Random.Range(0, 4);
+                //No repeating randoms
+                index = Random.Range(0, models.Length - 1);
+                while (Randoms.Contains(index))
+                    index = Random.Range(0, models.Length - 1);
+                Randoms.Add(index);
 
                 pos = new Vector3(pos.x, transform.position.y, transform.position.z + (i * 0.7f));
                 if (i > 2)
                 {
                     pos.x = transform.position.x + (i * 0.5f);
                     pos.z = transform.position.z + (i - 4 * 0.7f);
+
                 }
                 else
                 {
@@ -120,7 +131,11 @@ public class SpawnScript : MonoBehaviour {
                 switch (v)
                 {
                     case 0:
-                        spawn = Instantiate(models[Random.Range(0, models.Length - 1)], pos, rot);
+                        if (vscript.straight5)
+                            spawn = Instantiate(models[index], pos, rot);
+                        else
+                            spawn = Instantiate(models[index], pos, rot);
+                        //usedRandoms.Add(val);
                         break;
                     //Gender vs Gender
                     case 1:
@@ -151,9 +166,6 @@ public class SpawnScript : MonoBehaviour {
                         spawn = Instantiate(models[i], pos, rot);
                         break;
                 }
-                
-                
-
 
 
                 spawn.AddComponent<AnimatorScript>();
@@ -161,11 +173,15 @@ public class SpawnScript : MonoBehaviour {
                 bc.isTrigger = true;
                 bc.center = new Vector3(0, 2, 0);
                 spawn.transform.parent = gameObject.transform;
+
+                //index++;
             }
         }
         else
         {
             //Debug.Log("S5F: " + straight5);
+
+
             rot = Quaternion.Euler(0, 50, 0);
             int amount = 0;
 
@@ -214,6 +230,11 @@ public class SpawnScript : MonoBehaviour {
 
             for (int i = 0; i < amount; i++)
             {
+
+                index = Random.Range(0, models.Length - 1);
+                while (Randoms.Contains(index))
+                    index = Random.Range(0, models.Length - 1);
+                Randoms.Add(index);
                 //gender = Random.Range(0, 5);
                 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + (i * 0.7f));
 
@@ -222,9 +243,9 @@ public class SpawnScript : MonoBehaviour {
                 {
                     case 0:
                         if(vscript.straight5) 
-                            spawn = Instantiate(models[Random.Range(0, models.Length-1)],pos,rot);
+                            spawn = Instantiate(models[index], pos,rot);
                         else
-                            spawn = Instantiate(models[i], pos, rot);
+                            spawn = Instantiate(models[index], pos, rot);
                         break;
                     //Gender vs Gender
                     case 1:
