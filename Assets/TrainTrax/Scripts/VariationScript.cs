@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class VariationScript : MonoBehaviour {
 
+    [System.NonSerialized]
     public bool gender;
+    [System.NonSerialized]
     public bool speciesH;
+    [System.NonSerialized]
     public bool straight5;
+    [System.NonSerialized]
     public int variation;
     // Use this for initialization
     void Start () {
         gender = (Random.value > 0.5f);
         speciesH = (Random.value > 0.5f);
         straight5 = (Random.value > 0.5f);
-        //Debug.Log("s5: " + straight5);
+        Debug.Log("s5: " + straight5);
         Debug.Log("speciesH: " + speciesH);
-        //Debug.Log("gender: " + gender);
+        Debug.Log("gender: " + gender);
         variation = Random.Range(0, 4);
         Debug.Log("Variation: " + variation);
     }
