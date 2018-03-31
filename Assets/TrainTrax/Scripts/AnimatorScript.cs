@@ -14,8 +14,10 @@ public class AnimatorScript : MonoBehaviour {
     void Start () {
         anim = GetComponent<Animator>();
         trainengine = GameObject.Find("Trolley/Train").GetComponent<TrainEngine>();
-        ftrainengine = GameObject.Find("Fatman/Train").GetComponent<FatmanTrainEngine>();
+      
         scene = SceneManager.GetActiveScene();
+        if (scene.name == "Fatman" || scene.name == "FatmanPractice")
+            ftrainengine = GameObject.Find("Fatman/Train").GetComponent<FatmanTrainEngine>();
     }
 
     private void OnTriggerEnter(Collider other)
