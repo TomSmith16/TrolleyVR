@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4948325804131242}
   - component: {fileID: 33869188574556856}
   - component: {fileID: 23672914623960414}
+  - component: {fileID: 95702546679055384}
   m_Layer: 0
   m_Name: Penguin
   m_TagString: Untagged
@@ -80,3 +81,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1857510236578262}
   m_Mesh: {fileID: 4300002, guid: 5f2993b74f7639c4e942b1624508a980, type: 3}
+--- !u!95 &95702546679055384
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1857510236578262}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a22f9e066ca6286488ad63303173a0a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1

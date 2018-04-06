@@ -11,8 +11,6 @@ public class SpawnScript : MonoBehaviour {
     public GameObject[] penguins;
     private Vector3 pos;
     private Quaternion rot;
-    private List<int> Randoms;
-    private int index;
     VariationScript vscript;
 
     Scene scene;
@@ -21,10 +19,14 @@ public class SpawnScript : MonoBehaviour {
     void Start () {
         rot = Quaternion.Euler(0, 90, 0);
         scene = SceneManager.GetActiveScene();
-        vscript = GameObject.Find("Trolley").GetComponent<VariationScript>();
-        Randoms = new List<int>(models.Length-1);
-        //(vscript.variation);
-        VariationSpawn(0);
+        if (scene.name == "Trolley")
+            vscript = GameObject.Find("Trolley").GetComponent<VariationScript>();
+        else
+            vscript = GameObject.Find("Fatman").GetComponent<VariationScript>();
+        
+        //Randoms = new List<int>(models.Length-1);
+        VariationSpawn(vscript.variation);
+        //VariationSpawn(0);
         //Debug.Log("Variation: " + vscript.variation);
 
     }
@@ -39,7 +41,7 @@ public class SpawnScript : MonoBehaviour {
 
     void VariationSpawn(int v)
     {
-        Debug.Log("VSCRIPT START: " + vscript.straight5);
+        //Debug.Log("VSCRIPT START: " + vscript.straight5);
         if (transform.tag == "SpawnS")
         {
             //Debug.Log("S5: " + straight5);
@@ -62,21 +64,21 @@ public class SpawnScript : MonoBehaviour {
             {
                 //Standard
                 case 0:
-                    if (vscript.straight5)
+                    if (vscript.straight5 || scene.name == "Fatman")
                         amount = 5;
                     else
                         amount = 1;
                     break;
                 //Gender vs Gender
                 case 1:
-                    if (vscript.straight5)
+                    if (vscript.straight5 || scene.name == "Fatman")
                         amount = 5;
                     else
                         amount = 1;
                     break;
                 //Species
                 case 2:
-                    if (vscript.straight5)
+                    if (vscript.straight5 || scene.name == "Fatman")
                         amount = 5;
                     else
                         amount = 1;
@@ -84,14 +86,14 @@ public class SpawnScript : MonoBehaviour {
                     break;
                 //Context
                 case 3:
-                    if (vscript.straight5)
+                    if (vscript.straight5 || scene.name == "Fatman")
                         amount = 5;
                     else
                         amount = 1;
                     break;
                 //Ages
                 case 4:
-                    if (vscript.straight5)
+                    if (vscript.straight5 || scene.name == "Fatman")
                         amount = 5;
                     else
                         amount = 1;
@@ -109,11 +111,17 @@ public class SpawnScript : MonoBehaviour {
             {
                 //gender = Random.Range(0, 4);
                 //No repeating randoms
-                index = Random.Range(0, models.Length - 1);
+               // index = randomIndex();
+                    /*Random.Range(0, models.Length);
                 while (Randoms.Contains(index))
-                    index = Random.Range(0, models.Length - 1);
+                {
+                    index = Random.Range(0, models.Length);
+                    Debug.Log("Index Loading: " + index);
+                }
                 Randoms.Add(index);
-
+                Debug.Log("Index added: " + index);
+                //Debug.Log("RandomsS: " + Randoms[index] + " Model Name: " + models[index].ToString());
+                */
                 pos = new Vector3(pos.x, transform.position.y, transform.position.z + (i * 0.7f));
                 if (i > 2)
                 {
@@ -132,38 +140,41 @@ public class SpawnScript : MonoBehaviour {
                 {
                     case 0:
                         if (vscript.straight5)
-                            spawn = Instantiate(models[index], pos, rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         else
-                            spawn = Instantiate(models[index], pos, rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         //usedRandoms.Add(val);
                         break;
                     //Gender vs Gender
                     case 1:
                         if(vscript.gender)
-                            spawn = Instantiate(females[i], pos, rot);
+                            spawn = Instantiate(females[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         else
-                            spawn = Instantiate(males[i], pos, rot);
+                            spawn = Instantiate(males[vscript.Randoms[vscript.spawnIndex]], pos, rot);
 
                         //Debug.Log("Gender: " + gender);
                         break;
                     //Species
                     case 2:
                         if (vscript.speciesH)
+                        {
+                            rot = Quaternion.Euler(0, 0, 0);
                             spawn = Instantiate(penguins[i], pos, rot);
+                        }
                         else
-                            spawn = Instantiate(models[i], pos, rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
                     //Context
                     case 3:
-                        spawn = Instantiate(models[i], pos, rot);
+                        spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
                     //Ages
                     case 4:
-                        spawn = Instantiate(models[i], pos, rot);
+                        spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
 
                     default:
-                        spawn = Instantiate(models[i], pos, rot);
+                        spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
                 }
 
@@ -173,8 +184,9 @@ public class SpawnScript : MonoBehaviour {
                 bc.isTrigger = true;
                 bc.center = new Vector3(0, 2, 0);
                 spawn.transform.parent = gameObject.transform;
-
+                // Debug.Log("RandomsS: " + Randoms[i] + " Model Name: " + models[index].ToString());
                 //index++;
+                vscript.spawnIndex++;
             }
         }
         else
@@ -195,7 +207,7 @@ public class SpawnScript : MonoBehaviour {
                         amount = 1;
                     else
                         amount = 5;
-                    Debug.Log("AFTER S5 " + vscript.straight5);
+                    //Debug.Log("AFTER S5 " + vscript.straight5);
                     break;
                 //Gender vs Gender
                 case 1:
@@ -231,10 +243,16 @@ public class SpawnScript : MonoBehaviour {
             for (int i = 0; i < amount; i++)
             {
 
-                index = Random.Range(0, models.Length - 1);
+                //index = randomIndex();
+                /*Random.Range(0, models.Length);
                 while (Randoms.Contains(index))
-                    index = Random.Range(0, models.Length - 1);
+                {
+                    index = Random.Range(0, models.Length);
+                    Debug.Log("Index Loading: " + index);
+                }
                 Randoms.Add(index);
+                Debug.Log("Index added: " + index);
+                */
                 //gender = Random.Range(0, 5);
                 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + (i * 0.7f));
 
@@ -243,37 +261,37 @@ public class SpawnScript : MonoBehaviour {
                 {
                     case 0:
                         if(vscript.straight5) 
-                            spawn = Instantiate(models[index], pos,rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos,rot);
                         else
-                            spawn = Instantiate(models[index], pos, rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
                     //Gender vs Gender
                     case 1:
                         if (vscript.gender)
-                            spawn = Instantiate(males[i], pos, rot);
+                            spawn = Instantiate(males[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         else
-                            spawn = Instantiate(females[i], pos, rot);
+                            spawn = Instantiate(females[vscript.Randoms[vscript.spawnIndex]], pos, rot);
 
                         
                         break;
                     //Species
                     case 2:
                         if (vscript.speciesH)
-                            spawn = Instantiate(models[i], pos, rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         else
                             spawn = Instantiate(penguins[i], pos, rot);
                         break;
                     //Context
                     case 3:
-                        spawn = Instantiate(models[i], pos, rot);
+                        spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
                     //Ages
                     case 4:
-                        spawn = Instantiate(models[i], pos, rot);
+                        spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
 
                     default:
-                        spawn = Instantiate(models[i], pos, rot);
+                        spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
                         break;
                 }
 
@@ -284,11 +302,28 @@ public class SpawnScript : MonoBehaviour {
                 bc.isTrigger = true;
                 bc.center = new Vector3(0, 2, 0);
                 spawn.transform.parent = gameObject.transform;
-
+                //Debug.Log("RandomsF: " + Randoms[i] + " Model Name: " + models[index].ToString());
+                vscript.spawnIndex++;
             }
         }
     }
 
+
+   /* int randomIndex()
+    {
+        int j = Random.Range(0, models.Length);
+        Debug.Log("First index attempt: " + j);
+        while (Randoms.Contains(j))
+        {
+            j = Random.Range(0, models.Length);
+            Debug.Log("Index Loading: " + j);
+        }
+        Randoms.Add(j);
+        Debug.Log("Index added: " + j);
+
+        return j;
+    }
+    */
 
 	// Update is called once per frame
 	void Update () {

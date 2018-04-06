@@ -4,19 +4,58 @@ using UnityEngine;
 
 public class FatmanSpawnScript : MonoBehaviour {
     public GameObject[] models;
+    public GameObject[] males;
+    public GameObject[] females;
+    public GameObject[] penguins;
     private Vector3 pos;
     private Quaternion rot;
     private int gender;
+    VariationScript vscript;
+    private GameObject fatman;
 
     // Use this for initialization
     void Start()
     {
+        vscript = GameObject.Find("Fatman").GetComponent<VariationScript>();
+        rot = Quaternion.Euler(0, 90, 0);
+        //int amount = Random.Range(1, 3);
+                //gender = Random.Range(0, models.Length - 1);
 
-            rot = Quaternion.Euler(0, 90, 0);
-            //int amount = Random.Range(1, 3);
-                gender = Random.Range(0, 4);
                 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                GameObject fatman = Instantiate(models[gender], pos, rot);
+        switch(vscript.variation)
+        {
+            case 0:
+                fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                break;
+
+            case 1:
+                if (vscript.gender)
+                    fatman = Instantiate(males[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                else
+                    fatman = Instantiate(females[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                break;
+
+            case 2:
+                if(vscript.speciesH)
+                    fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                else
+                    fatman = Instantiate(penguins[Random.Range(0,3)], pos, rot);
+
+                break;
+
+            case 3:
+               fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                break;
+
+            case 4:
+                fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                break;
+
+            default:
+                fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                break;
+        }
+               // GameObject fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
 
                 fatman.tag = "ForkCollider";
                 fatman.transform.parent = gameObject.transform;
@@ -26,6 +65,7 @@ public class FatmanSpawnScript : MonoBehaviour {
                 Rigidbody rb = fatman.AddComponent<Rigidbody>() as Rigidbody;
                 rb.constraints = RigidbodyConstraints.FreezePositionZ;
                 fatman.AddComponent<AnimatorScript>();
+                vscript.spawnIndex++;
 
     }
 
