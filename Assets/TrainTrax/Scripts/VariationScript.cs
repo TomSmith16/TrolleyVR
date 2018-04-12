@@ -32,36 +32,36 @@ public class VariationScript : MonoBehaviour {
         Debug.Log("s5: " + straight5);
         Debug.Log("speciesH: " + speciesH);
         Debug.Log("gender: " + gender);
-        variation = Random.Range(0, 5);
-        //variation = 2;
+        variation = Random.Range(0, 3);
+       // variation = 2;
         Debug.Log("Variation: " + variation);
         Debug.Log("models length " + (sscript.models.Length - 1));
         spawnIndex = 0;
         switch(variation)
         {
             case 0:
-                Randoms = new List<int>(sscript.models.Length - 1);
-                Randomiser(Randoms);
+                Randoms = new List<int>(sscript.models.Length - 1);      
+                Randomiser(Randoms, sscript.models.Length - 1);
                 DisclaimerText(scene.name, variation);
                 break;
             case 1:
                 Randoms = new List<int>(sscript.females.Length - 1);
-                Randomiser(Randoms);
+                Randomiser(Randoms, sscript.females.Length - 1);
                 DisclaimerText(scene.name, variation);
                 break;
             case 2:
                 Randoms = new List<int>(sscript.models.Length - 1);
-                Randomiser(Randoms);
+                Randomiser(Randoms, sscript.models.Length - 1);
                 DisclaimerText(scene.name, variation);
                 break;
             case 3:
                 Randoms = new List<int>(sscript.models.Length - 1);
-                Randomiser(Randoms);
+                Randomiser(Randoms, sscript.models.Length - 1);
                 DisclaimerText(scene.name, variation);
                 break;
             case 4:
                 Randoms = new List<int>(sscript.models.Length - 1);
-                Randomiser(Randoms);
+                Randomiser(Randoms, sscript.models.Length - 1);
                 DisclaimerText(scene.name, variation);
                 break;
 
@@ -72,19 +72,17 @@ public class VariationScript : MonoBehaviour {
         
     }
 
-    void Randomiser(List<int> Randoms)
+    void Randomiser(List<int> Randoms, int modelslength)
     {
-
-        for (int i = 0; i < sscript.models.Length; i++)
+        for (int i = 0; i < modelslength; i++)
         {
-            int index = Random.Range(0, sscript.models.Length);
+            int index = Random.Range(0, modelslength);
             while (Randoms.Contains(index))
-                index = Random.Range(0, sscript.models.Length);
+                index = Random.Range(0, modelslength);
             Randoms.Add(index);
             Debug.Log("RandomsVariation: " + Randoms[i]);
         }
-
-
+        Debug.Log("Completed Randoms List");
     }
 
 

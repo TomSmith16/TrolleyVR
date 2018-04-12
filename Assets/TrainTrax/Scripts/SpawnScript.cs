@@ -23,11 +23,10 @@ public class SpawnScript : MonoBehaviour {
             vscript = GameObject.Find("Trolley").GetComponent<VariationScript>();
         else
             vscript = GameObject.Find("Fatman").GetComponent<VariationScript>();
-        
+
         //Randoms = new List<int>(models.Length-1);
-        VariationSpawn(vscript.variation);
-        //VariationSpawn(0);
-        //Debug.Log("Variation: " + vscript.variation);
+         VariationSpawn(vscript.variation);
+        //VariationSpawn(1);        //Debug.Log("Variation: " + vscript.variation);
 
     }
 
@@ -46,6 +45,7 @@ public class SpawnScript : MonoBehaviour {
         {
             //Debug.Log("S5: " + straight5);
             int amount = 0;
+            
             //Rotation stays the same.
             rot = Quaternion.Euler(0, 90, 0);
             if (scene.name == "Fatman")
@@ -71,17 +71,17 @@ public class SpawnScript : MonoBehaviour {
                     break;
                 //Gender vs Gender
                 case 1:
-                    if (vscript.straight5 || scene.name == "Fatman")
-                        amount = 5;
+                    if (/*vscript.straight5 ||*/ scene.name == "Fatman")
+                        amount = 4;
                     else
-                        amount = 1;
+                        amount = 4;
                     break;
                 //Species
                 case 2:
-                    if (vscript.straight5 || scene.name == "Fatman")
-                        amount = 5;
+                    if (scene.name == "Fatman")
+                        amount = 3;
                     else
-                        amount = 1;
+                        amount = 3;
                     //speciesH = (Random.value > 0.5f);
                     break;
                 //Context
@@ -109,19 +109,7 @@ public class SpawnScript : MonoBehaviour {
 
             for (int i = 0; i < amount; i++)
             {
-                //gender = Random.Range(0, 4);
-                //No repeating randoms
-               // index = randomIndex();
-                    /*Random.Range(0, models.Length);
-                while (Randoms.Contains(index))
-                {
-                    index = Random.Range(0, models.Length);
-                    Debug.Log("Index Loading: " + index);
-                }
-                Randoms.Add(index);
-                Debug.Log("Index added: " + index);
-                //Debug.Log("RandomsS: " + Randoms[index] + " Model Name: " + models[index].ToString());
-                */
+            
                 pos = new Vector3(pos.x, transform.position.y, transform.position.z + (i * 0.7f));
                 if (i > 2)
                 {
@@ -188,6 +176,10 @@ public class SpawnScript : MonoBehaviour {
                 //index++;
                 vscript.spawnIndex++;
             }
+            if (vscript.variation != 0)
+            {
+                vscript.spawnIndex = 0;
+            }
         }
         else
         {
@@ -212,14 +204,14 @@ public class SpawnScript : MonoBehaviour {
                 //Gender vs Gender
                 case 1:
                     if (scene.name == "Trolley")
-                        amount = 5;
+                        amount = 4;
                     else
                         amount = 1;
                     break;
                 //Species
                 case 2:
                     if (scene.name == "Trolley")
-                        amount = 5;
+                        amount = 3;
                     else
                         amount = 1;
                     //speciesH = !speciesH;
@@ -243,16 +235,6 @@ public class SpawnScript : MonoBehaviour {
             for (int i = 0; i < amount; i++)
             {
 
-                //index = randomIndex();
-                /*Random.Range(0, models.Length);
-                while (Randoms.Contains(index))
-                {
-                    index = Random.Range(0, models.Length);
-                    Debug.Log("Index Loading: " + index);
-                }
-                Randoms.Add(index);
-                Debug.Log("Index added: " + index);
-                */
                 //gender = Random.Range(0, 5);
                 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + (i * 0.7f));
 
@@ -304,6 +286,10 @@ public class SpawnScript : MonoBehaviour {
                 spawn.transform.parent = gameObject.transform;
                 //Debug.Log("RandomsF: " + Randoms[i] + " Model Name: " + models[index].ToString());
                 vscript.spawnIndex++;
+            }
+            if (vscript.variation != 0)
+            {
+                vscript.spawnIndex = 0;
             }
         }
     }
