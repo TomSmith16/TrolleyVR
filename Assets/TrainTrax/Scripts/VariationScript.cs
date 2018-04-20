@@ -33,7 +33,7 @@ public class VariationScript : MonoBehaviour {
         Debug.Log("speciesH: " + speciesH);
         Debug.Log("gender: " + gender);
         variation = Random.Range(0, 3);
-       // variation = 2;
+        //variation = 2;
         Debug.Log("Variation: " + variation);
         Debug.Log("models length " + (sscript.models.Length - 1));
         spawnIndex = 0;

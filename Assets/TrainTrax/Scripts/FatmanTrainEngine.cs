@@ -22,6 +22,7 @@ public class FatmanTrainEngine : MonoBehaviour {
     public GameObject forkcollider;
     public FadeScript fade;
     Scene scene;
+    
 
     public int currentNode = 0;
 

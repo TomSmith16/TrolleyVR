@@ -144,13 +144,14 @@ public class SpawnScript : MonoBehaviour {
                         break;
                     //Species
                     case 2:
-                        if (vscript.speciesH)
+                        if (vscript.speciesH && scene.name != "Fatman" )
                         {
+
                             rot = Quaternion.Euler(0, 0, 0);
                             spawn = Instantiate(penguins[i], pos, rot);
                         }
                         else
-                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
+                            spawn = Instantiate(models[vscript.Randoms[vscript.spawnIndex + 3]], pos, rot);
                         break;
                     //Context
                     case 3:
@@ -167,7 +168,7 @@ public class SpawnScript : MonoBehaviour {
                 }
 
 
-                spawn.AddComponent<AnimatorScript>();
+                //spawn.AddComponent<AnimatorScript>();
                 BoxCollider bc = spawn.AddComponent<BoxCollider>() as BoxCollider;
                 bc.isTrigger = true;
                 bc.center = new Vector3(0, 2, 0);
@@ -279,7 +280,7 @@ public class SpawnScript : MonoBehaviour {
 
 
 
-                spawn.AddComponent<AnimatorScript>();
+                //spawn.AddComponent<AnimatorScript>();
                 BoxCollider bc = spawn.AddComponent<BoxCollider>() as BoxCollider;
                 bc.isTrigger = true;
                 bc.center = new Vector3(0, 2, 0);

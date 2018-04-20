@@ -78,7 +78,7 @@ public class OrientationScript : MonoBehaviour {
         else
         {
             targetLookAt = new Vector3(nodes[trainEngine.currentNode + 1].transform.position.x, 0, nodes[trainEngine.currentNode + 1].transform.position.z);
-            print("Node to look at: " + nodes[trainEngine.currentNode + 1]);
+            //print("Node to look at: " + nodes[trainEngine.currentNode + 1]);
         }
 
         transform.LookAt(targetLookAt);
