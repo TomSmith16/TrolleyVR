@@ -79,13 +79,15 @@ public class FatmanTrainEngine : MonoBehaviour {
                 largeman = GameObject.Find("Fatman/Crate");
             }
 
-            if (largeman.transform.position.y < 1)
-            {
             
-                largeman.GetComponentInChildren<Rigidbody>().isKinematic = true;
-                largeman.GetComponentInChildren<BoxCollider>().isTrigger = true;
-              
-            }
+        }
+
+        if (largeman.transform.position.y < 1)
+        {
+            largeman.GetComponentInChildren<BoxCollider>().size = new Vector3(largeman.GetComponentInChildren<BoxCollider>().size.x, largeman.GetComponentInChildren<BoxCollider>().size.y, 4);
+            largeman.GetComponentInChildren<Rigidbody>().isKinematic = true;
+            largeman.GetComponentInChildren<BoxCollider>().isTrigger = true;
+
         }
 
         //ApplySteer();

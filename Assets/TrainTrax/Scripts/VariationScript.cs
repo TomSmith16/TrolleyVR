@@ -23,6 +23,7 @@ public class VariationScript : MonoBehaviour {
     public SpawnScript sscript;
     Scene scene;
     public Text Info;
+    VariationAcrossScript vascript;
     // Use this for initialization
     void Start () {
         scene = SceneManager.GetActiveScene();
@@ -32,8 +33,10 @@ public class VariationScript : MonoBehaviour {
         Debug.Log("s5: " + straight5);
         Debug.Log("speciesH: " + speciesH);
         Debug.Log("gender: " + gender);
-        variation = Random.Range(0, 3);
-        //variation = 2;
+        if (GameObject.Find("VariationAcross"))
+            vascript = GameObject.Find("VariationAcross").GetComponent<VariationAcrossScript>();
+        variation = vascript.constantvariation;
+       // variation = 2;
         Debug.Log("Variation: " + variation);
         Debug.Log("models length " + (sscript.models.Length - 1));
         spawnIndex = 0;

@@ -8,7 +8,9 @@ public class FatmanSpawnScript : MonoBehaviour {
     public GameObject[] females;
     public GameObject[] penguins;
     private Vector3 pos;
+    private Vector3 ppos;
     private Quaternion rot;
+    private Quaternion prot;
     private int gender;
     VariationScript vscript;
     private GameObject fatman;
@@ -19,10 +21,10 @@ public class FatmanSpawnScript : MonoBehaviour {
 
         vscript = GameObject.Find("Fatman").GetComponent<VariationScript>();
         rot = Quaternion.Euler(0, 90, 0);
-        //int amount = Random.Range(1, 3);
-                //gender = Random.Range(0, models.Length - 1);
+        pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
-                pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        ppos = new Vector3(transform.position.x+0.5f, transform.position.y + 0.5f, transform.position.z);
+        prot = Quaternion.Euler(0, 180, 0);
             //fatman = Instantiate(models[8], pos, rot);
 
         switch (vscript.variation)
@@ -43,10 +45,10 @@ public class FatmanSpawnScript : MonoBehaviour {
                 break;
 
             case 2:
-                //if(vscript.speciesH)
+                if(vscript.speciesH)
                     fatman = Instantiate(models[vscript.Randoms[vscript.spawnIndex]], pos, rot);
-                /*else
-                    fatman = Instantiate(penguins[Random.Range(0,3)], pos, rot);*/
+                else
+                    fatman = Instantiate(penguins[0], ppos, prot);
 
                 break;
 
@@ -70,7 +72,12 @@ public class FatmanSpawnScript : MonoBehaviour {
                 BoxCollider bc = fatman.AddComponent<BoxCollider>() as BoxCollider;
                 bc.size = new Vector3(0.3f, 3, 0.1f);
                 bc.center = new Vector3(0, 1.5f, 0);
-                if(fatman.name.Contains("Kachu") || fatman.name.Contains("Douglas"))
+                if(fatman.name.Contains("Penguin"))
+                {
+                    bc.size = new Vector3(0.5f, 5, 1.5f);
+                    bc.center = new Vector3(0, 2.5f, 0);
+                }
+        if (fatman.name.Contains("Kachu") || fatman.name.Contains("Douglas"))
                 {
                     bc.size = new Vector3(0.3f, 2, 0.1f);
                     bc.center = new Vector3(0, 1, 0);
@@ -85,7 +92,25 @@ public class FatmanSpawnScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (fatman.name.Contains("Penguin"))
+            {
+                fatman.GetComponent<BoxCollider>().size = new Vector3(0.5f, 5, 1.5f);
+                fatman.transform.position = ppos;
+                fatman.transform.rotation = prot;
+            }
+            else
+            {
+                fatman.GetComponent<BoxCollider>().size = new Vector3(fatman.GetComponent<BoxCollider>().size.x, fatman.GetComponent<BoxCollider>().size.y, 0.1f);
+                fatman.transform.position = pos;
+                fatman.transform.rotation = rot;
+                fatman.GetComponent<Animator>().Play("Idle", -1, 0f);
+                fatman.GetComponent<Animator>().SetBool("Falling", false);
+            }
+            fatman.GetComponent<Rigidbody>().isKinematic = false;
+            fatman.GetComponent<BoxCollider>().isTrigger = false;
+        }
     }
 }
 

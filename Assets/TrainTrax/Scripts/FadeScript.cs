@@ -16,6 +16,7 @@ public class FadeScript : MonoBehaviour {
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup.alpha == 0)
         {
+            Debug.Log("Fade in");
             while (canvasGroup.alpha < 1)
             {
                 canvasGroup.alpha += Time.deltaTime / 2;

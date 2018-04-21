@@ -12,14 +12,20 @@ public class TrainCollideScript : MonoBehaviour {
     GameObject ballspawn;
     public int cannonballamount;
     public GameObject ballobject;
-    //public GameObject canvas;
+    public ParticleSystem ps;
+    public ParticleSystem ps1;
+    Quaternion prot;
+    public GameObject canvas;
     //public GameObject text;
     Scene scene;
+    VariationAcrossScript vascript;
    
     // Use this for initialization
     void Start () {
         scene = SceneManager.GetActiveScene();
-        //fade = canvas.GetComponent<FadeScript>();
+        if (GameObject.Find("VariationAcross"))
+            vascript = GameObject.Find("VariationAcross").GetComponent<VariationAcrossScript>();
+        fade = canvas.GetComponent<FadeScript>();
 	}
 	
 	// Update is called once per frame
@@ -27,8 +33,11 @@ public class TrainCollideScript : MonoBehaviour {
 		
 	}
 
-    //Trigger events for lever
-
+    /*0 == TROLLEY PRACTICE
+      1 == TROLLEY
+      2 == FATMAN PRACTICE
+      3 == FATMAN
+    */
     //Trigger events for lever
     private void OnTriggerEnter(Collider other)
     {
@@ -63,7 +72,10 @@ public class TrainCollideScript : MonoBehaviour {
                 default:
                     break;
             }
-            StartCoroutine(Wait(2));
+            if (vascript.firstrun)
+                StartCoroutine(Wait(2));
+            else
+                StartCoroutine(Wait(3));
         }
         else if (scene.name == "Fatman" || scene.name == "FatmanPractice")
         {
@@ -88,7 +100,17 @@ public class TrainCollideScript : MonoBehaviour {
                     enginespeed.GetComponent<AudioSource>().Stop();
                     enginespeed.GetComponent<AudioSource>().PlayOneShot(trainstop, 0.6f);
 
-                    if(scene.name == "FatmanPractice")
+                    Debug.Log(other.name);
+                    if (other.name.Contains("Penguin"))
+                    {
+                        Instantiate(ps, other.transform.position, ps.transform.rotation);
+                    }
+                    else if (other.name != "Trigger")
+                    {
+                        Instantiate(ps1, other.transform.position, ps1.transform.rotation);
+                    }
+
+                    if (scene.name == "FatmanPractice")
                     {
                         //Spawn objects that show the barrel is broken/stopped the train.
                         Vector3 balllocation = new Vector3(barrel.transform.position.x + 1, barrel.transform.position.y, barrel.transform.position.z - 1);
@@ -107,6 +129,7 @@ public class TrainCollideScript : MonoBehaviour {
                             ballspawn = Instantiate(cannonballs, balllocation, Quaternion.Euler(0,0,0), barrel.transform);
                             ballspawn.GetComponent<Rigidbody>().AddForce(forceamount, 0, 0, ForceMode.Impulse);
                         }*/
+                       
                     }
 
 
@@ -114,19 +137,32 @@ public class TrainCollideScript : MonoBehaviour {
 
                     //fade.FadeOut();
                    // text.GetComponent<Text>().text = "You chose to push the large man.";
-                    print("Train blocked");
+                    
                     break;
             }
+
+
             if (scene.name == "FatmanPractice")
             {
-                
+                Debug.Log("load next level you fuck");
                 StartCoroutine(Wait(3));
             }
             if (scene.name == "Fatman")
             {
                 Debug.Log("Simulation over");
                 //Fade in end screen?
-                //StartCoroutine(Wait(4));
+                vascript.firstrun = false;
+                vascript.constantvariation += 1;
+                if (vascript.constantvariation > 2)
+                    vascript.constantvariation = 0;
+                vascript.timesrun += 1;
+                if(vascript.timesrun == 3)
+                {
+                    Debug.Log("Fade time");
+                    fade.FadeOut();
+                }
+                else
+                    StartCoroutine(Wait(1));
             }
         }
         else

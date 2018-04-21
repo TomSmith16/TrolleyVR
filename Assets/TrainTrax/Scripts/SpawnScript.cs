@@ -144,7 +144,7 @@ public class SpawnScript : MonoBehaviour {
                         break;
                     //Species
                     case 2:
-                        if (vscript.speciesH && scene.name != "Fatman" )
+                        if (vscript.speciesH /*&& scene.name != "Fatman"*/ )
                         {
 
                             rot = Quaternion.Euler(0, 0, 0);
