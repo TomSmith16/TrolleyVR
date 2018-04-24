@@ -2303,8 +2303,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c831cb0ea841b4ea3596873b221461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runover: {fileID: 8300000, guid: e9f6ef38a1970664885962435b984849, type: 3}
+  penguindeath: {fileID: 0}
   ps: {fileID: 198801661668035120, guid: 0f7749cce02f96d41bf6320a61c02817, type: 2}
   ps1: {fileID: 198801661668035120, guid: 0f7749cce02f96d41bf6320a61c02817, type: 2}
+  maleScreams: {fileID: 0}
+  soloMalescream: {fileID: 0}
+  femaleScreams: {fileID: 0}
+  soloFemalescream: {fileID: 0}
 --- !u!137 &137017943010954412
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

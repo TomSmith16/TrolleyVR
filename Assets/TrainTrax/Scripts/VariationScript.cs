@@ -35,8 +35,9 @@ public class VariationScript : MonoBehaviour {
         Debug.Log("gender: " + gender);
         if (GameObject.Find("VariationAcross"))
             vascript = GameObject.Find("VariationAcross").GetComponent<VariationAcrossScript>();
+
         variation = vascript.constantvariation;
-       // variation = 2;
+        //variation = 0;
         Debug.Log("Variation: " + variation);
         Debug.Log("models length " + (sscript.models.Length - 1));
         spawnIndex = 0;

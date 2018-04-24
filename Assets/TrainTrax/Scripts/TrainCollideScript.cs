@@ -25,7 +25,8 @@ public class TrainCollideScript : MonoBehaviour {
         scene = SceneManager.GetActiveScene();
         if (GameObject.Find("VariationAcross"))
             vascript = GameObject.Find("VariationAcross").GetComponent<VariationAcrossScript>();
-        fade = canvas.GetComponent<FadeScript>();
+        if(canvas)
+            fade = canvas.GetComponent<FadeScript>();
 	}
 	
 	// Update is called once per frame
@@ -72,9 +73,12 @@ public class TrainCollideScript : MonoBehaviour {
                 default:
                     break;
             }
-            if (vascript.firstrun)
+
+            if (vascript.timesrun == 3)
+                fade.FadeOut();
+            else if (vascript.firstrun)
                 StartCoroutine(Wait(2));
-            else
+            else      
                 StartCoroutine(Wait(3));
         }
         else if (scene.name == "Fatman" || scene.name == "FatmanPractice")
@@ -147,18 +151,33 @@ public class TrainCollideScript : MonoBehaviour {
                 Debug.Log("load next level you fuck");
                 StartCoroutine(Wait(3));
             }
+
+
             if (scene.name == "Fatman")
             {
                 Debug.Log("Simulation over");
                 //Fade in end screen?
                 vascript.firstrun = false;
-                vascript.constantvariation += 1;
-                if (vascript.constantvariation > 2)
-                    vascript.constantvariation = 0;
-                vascript.timesrun += 1;
-                if(vascript.timesrun == 3)
+                if (vascript.varA)
                 {
-                    Debug.Log("Fade time");
+                    vascript.constantvariation += 1;
+                    if (vascript.constantvariation > 2)
+                        vascript.constantvariation = 0;
+                }
+                else
+                {
+                    vascript.constantvariation -= 1;
+                    if (vascript.constantvariation < 0)
+                        vascript.constantvariation = 2;
+                }
+
+                Debug.Log("Constant Variation: " + vascript.constantvariation);
+
+                vascript.timesrun += 1;
+                Debug.Log("Times Run: " + vascript.timesrun);
+                if (vascript.timesrun == 3)
+                {
+                    //Debug.Log("Fade time");
                     fade.FadeOut();
                 }
                 else
