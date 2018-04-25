@@ -21,6 +21,8 @@ public class FatmanTrainEngine : MonoBehaviour {
     public GameObject largeman;
     public GameObject forkcollider;
     public FadeScript fade;
+    Vector3 cratePos;
+    Quaternion crateRot;
     Scene scene;
     
 
@@ -33,6 +35,7 @@ public class FatmanTrainEngine : MonoBehaviour {
         scene = SceneManager.GetActiveScene();
         Transform[] pathstraightTransforms = pathstraight.GetComponentsInChildren<Transform>();
         nodesstraight = new List<Transform>();
+        largeman = GameObject.Find("Fatman/Crate");
 
         for (int i = 0; i < pathstraightTransforms.Length; i++)
         {
@@ -77,8 +80,16 @@ public class FatmanTrainEngine : MonoBehaviour {
             {
                 //largeman = GameObject.Find("Fatman/Barrel");
                 largeman = GameObject.Find("Fatman/Crate");
-            }
 
+                /*
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    
+                    largeman.transform.position = cratePos;
+                    largeman.transform.rotation = crateRot;
+                }
+                */
+            }
             
         }
 

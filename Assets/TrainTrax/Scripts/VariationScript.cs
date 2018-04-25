@@ -36,8 +36,8 @@ public class VariationScript : MonoBehaviour {
         if (GameObject.Find("VariationAcross"))
             vascript = GameObject.Find("VariationAcross").GetComponent<VariationAcrossScript>();
 
-        variation = vascript.constantvariation;
-        //variation = 0;
+        //variation = vascript.constantvariation;
+        variation = 2;
         Debug.Log("Variation: " + variation);
         Debug.Log("models length " + (sscript.models.Length - 1));
         spawnIndex = 0;
@@ -97,19 +97,25 @@ public class VariationScript : MonoBehaviour {
             switch(variation)
             {
                 case 0:
-                    Info.text = "In this scenario, the trolley has set off along the track without a driver. There are people trapped on the line. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nPress G to begin the simulation.";
+                    Info.text = "In this scenario, the trolley has set off along the track without a driver. There are people trapped on the line. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nLet the researcher know when you are ready.";
                     break;
 
                 case 1:
-                    Info.text = "In this scenario, the trolley has set off along the track without a driver. There is a group of males trapped on one line and a group of females trapped on the other. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nPress G to begin the simulation.";
+                    if(gender)
+                        Info.text = "In this scenario, the trolley has set off along the track without a driver. The trolley is heading towards a group of females, with a group of males on the forked track. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nLet the researcher know when you are ready.";
+                    else
+                        Info.text = "In this scenario, the trolley has set off along the track without a driver. The trolley is heading towards a group of males, with a group of females on the forked track. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nLet the researcher know when you are ready.";
                     break;
 
                 case 2:
-                    Info.text = "In this scenario, the trolley has set off along the track without a driver. There is a group of people trapped on one line and a group of penguins trapped on the other. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nPress G to begin the simulation.";
+                    if(speciesH)
+                        Info.text = "In this scenario, the trolley has set off along the track without a driver. The trolley is heading towards a group of penguins, with a group of people on the forked track.  You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nLet the researcher know when you are ready.";
+                    else
+                        Info.text = "In this scenario, the trolley has set off along the track without a driver. The trolley is heading towards a group of people, with a group of penguins on the forked track.  You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nLet the researcher know when you are ready.";
 
                     break;
                 default:
-                    Info.text = "In this scenario, the trolley has set off along the track without a driver. There are people trapped on the line. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nPress G to begin the simulation.";
+                    Info.text = "In this scenario, the trolley has set off along the track without a driver. There are people trapped on the line. You cannot stop the trolley, or warn the people trapped on the line. However, you are standing near a switch which you can operate to alter the direction of the trolley. \nYour task is to decide whether to pull the switch or not. \n\nLet the researcher know when you are ready.";
                     break;
             }
             
@@ -120,11 +126,26 @@ public class VariationScript : MonoBehaviour {
             switch (variation)
             {
                 case 0:
-                    Info.text = "In this scenario, you are standing on a footbridge above the railway. There is another person on the bridge with you. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nPress G to begin the simulation.";
+                    Info.text = "In this scenario, you are standing on a footbridge above the railway. There is another person on the bridge with you, and a group of people on the tracks below. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nLet the researcher know when you are ready.";
+                    break;
+
+                case 1:
+                    if(gender)
+                        Info.text = "In this scenario, you are standing on a footbridge above the railway. There is a man on the bridge with you, and a group of women on the tracks below. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nLet the researcher know when you are ready.";
+                    else
+                        Info.text = "In this scenario, you are standing on a footbridge above the railway. There is a woman on the bridge with you, and a group of men on the tracks below. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nLet the researcher know when you are ready.";
+                    break;
+
+                case 2:
+                    if(speciesH)
+                        Info.text = "In this scenario, you are standing on a footbridge above the railway. There is another person on the bridge with you, and a group of penguins on the tracks below. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nLet the researcher know when you are ready.";
+                    else
+                        Info.text = "In this scenario, you are standing on a footbridge above the railway. There is a penguin on the bridge with you, and a group of people on the tracks below. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nLet the researcher know when you are ready.";
+
                     break;
 
                 default:
-                    Info.text = "In this scenario, you are standing on a footbridge above the railway. There is another person on the bridge with you. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nPress G to begin the simulation.";
+                    Info.text = "In this scenario, you are standing on a footbridge above the railway. There is another person on the bridge with you. The trolley has again set off, without a driver, along the track. This time there is no switch to pull and no alternative track to send the trolley down. A person or object falling in front of the trolley will stop it. You cannot jump off the bridge. \nWill you choose to stop the train some other way? \n\nLet the researcher know when you are ready.";
                     break;
 
 

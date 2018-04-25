@@ -23,7 +23,7 @@ public class FatmanSpawnScript : MonoBehaviour {
         rot = Quaternion.Euler(0, 90, 0);
         pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
-        ppos = new Vector3(transform.position.x+0.5f, transform.position.y + 0.5f, transform.position.z);
+        ppos = new Vector3(transform.position.x+0.5f, transform.position.y + 0.5f, transform.position.z+0.5f);
         prot = Quaternion.Euler(0, 180, 0);
             //fatman = Instantiate(models[8], pos, rot);
 
@@ -74,7 +74,7 @@ public class FatmanSpawnScript : MonoBehaviour {
                 bc.center = new Vector3(0, 1.5f, 0);
                 if(fatman.name.Contains("Penguin"))
                 {
-                    bc.size = new Vector3(0.5f, 5, 1.5f);
+                    bc.size = new Vector3(1, 5, 1.5f);
                     bc.center = new Vector3(0, 2.5f, 0);
                 }
         if (fatman.name.Contains("Kachu") || fatman.name.Contains("Douglas"))
@@ -92,11 +92,11 @@ public class FatmanSpawnScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             if (fatman.name.Contains("Penguin"))
             {
-                fatman.GetComponent<BoxCollider>().size = new Vector3(0.5f, 5, 1.5f);
+                fatman.GetComponent<BoxCollider>().size = new Vector3(1, 5, 1.5f);
                 fatman.transform.position = ppos;
                 fatman.transform.rotation = prot;
             }
